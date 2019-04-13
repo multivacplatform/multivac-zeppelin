@@ -101,6 +101,7 @@ RUN echo "$LOG_TAG Install requirements to build Zeppelin" && \
 RUN useradd -ms /bin/bash zeppelin
 USER zeppelin
 WORKDIR /home/zeppelin
+RUN ls -l ~/
 RUN whoami
 RUN node -v
 RUN npm -v
