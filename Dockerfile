@@ -101,6 +101,7 @@ RUN echo "$LOG_TAG Install requirements to build Zeppelin" && \
 RUN groupadd -g 999 zeppelin && \
     useradd -r -u 999 -g zeppelin zeppelin
 USER zeppelin
+WORKDIR /home/zeppelin
 RUN whoami
 RUN node -v
 RUN npm -v
