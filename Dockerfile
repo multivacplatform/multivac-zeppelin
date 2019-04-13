@@ -85,27 +85,31 @@ RUN echo "$LOG_TAG Install R related packages" && \
 	Rscript -e "library('devtools'); library('Rcpp'); install_github('ramnathv/rCharts')"
 
 RUN echo "$LOG_TAG Install requirements to build Zeppelin" && \
-	apt-get -y install nodejs npm git libfontconfig r-base-dev r-cran-evaluate && \
+	curl -sL https://deb.nodesource.com/setup_10.x | bash - && \
+	curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+	echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \	
+	apt-get update && \
+	apt-get -y install nodejs yarn git libfontconfig r-base-dev r-cran-evaluate && \
 	wget http://www.eu.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz && \
 	tar -zxf apache-maven-3.3.9-bin.tar.gz -C /usr/local/ && \
 	ln -s /usr/local/apache-maven-3.3.9/bin/mvn /usr/local/bin/mvn
-
-RUN ln -s /usr/bin/nodejs /usr/bin/node
 
 # confirm node, nom and maven installation
 RUN node -v
 RUN npm -v
 RUN mvn -v
+RUN rm -rf ~/.npm/
 
 RUN export MAVEN_OPTS="-Xmx2g -XX:MaxPermSize=1024m"
 
 RUN echo "$LOG_TAG Build Zeppelin $Z_VERSION" && \
+	rm -rf zeppelin && \
 	git clone https://github.com/multivacplatform/zeppelin && \
-	cd zeppelin &&\
+	cd zeppelin && \
 	git checkout branch-0.8 && \
 	./dev/change_scala_version.sh 2.11 && \
-	rm -rf ~/.m2/repository && \
-	mvn clean package -DskipTests -Pbuild-distr -Dcheckstyle.skip=true -Pspark-2.4 -Pscala-2.11 &&\
+	# rm -rf ~/.m2/repository && \
+	mvn -X clean package -DskipTests -Pbuild-distr -Dcheckstyle.skip=true -Pspark-2.4 -Pscala-2.11 &&\
 	mv zeppelin-distribution/target/zeppelin-${Z_VERSION}-SNAPSHOT/zeppelin-${Z_VERSION}-SNAPSHOT ${Z_HOME}
 
 RUN echo "$LOG_TAG Cleanup" && \
