@@ -120,10 +120,6 @@ RUN echo "$LOG_TAG Build Zeppelin $Z_VERSION" && \
 	mvn -X clean package -DskipTests -Pbuild-distr -Dcheckstyle.skip=true -Pspark-2.4 -Pscala-2.11 &&\
 	mv zeppelin-distribution/target/zeppelin-${Z_VERSION}-SNAPSHOT/zeppelin-${Z_VERSION}-SNAPSHOT ${Z_HOME}
 
-RUN echo "$LOG_TAG Cleanup" && \
-	apt-get autoclean && \
-	apt-get clean
-
 RUN pwd
 RUN ls /home/zeppelin
 
