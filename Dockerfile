@@ -103,6 +103,7 @@ RUN node -v
 RUN npm -v
 RUN mvn -v
 RUN echo '{ "allow_root": true }' > /root/.bowerrc
+RUN cat /root/.bowerrc
 
 RUN export MAVEN_OPTS="-Xmx2g -XX:MaxPermSize=1024m"
 
