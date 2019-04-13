@@ -16,7 +16,7 @@ FROM ubuntu:16.04
 LABEL maintainer="maziyar.panahi@iscpif.fr"
 # `Z_VERSION` will be updated by `dev/change_zeppelin_version.sh`
 ENV Z_VERSION="0.8.2"
-ENV LOG_TAG="[ZEPPELIN_${Z_VERSION}]:" Z_HOME="/zeppelin" LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
+ENV LOG_TAG="[ZEPPELIN_${Z_VERSION}]:" Z_HOME="/home/zeppelin" LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
 RUN echo "$LOG_TAG update and install basic packages" && \
 	apt-get -y update && \
 	apt-get install -y locales && \
@@ -96,12 +96,11 @@ RUN echo "$LOG_TAG Install requirements to build Zeppelin" && \
 	npm config set strict-ssl false && \
 	npm install -g bower
 
-
+# add zeppelin user and set home directory
 # confirm node, nom and maven installation
 RUN useradd -ms /bin/bash zeppelin
 USER zeppelin
 WORKDIR /home/zeppelin
-RUN ls -l ~/
 RUN whoami
 RUN node -v
 RUN npm -v
@@ -124,6 +123,9 @@ RUN echo "$LOG_TAG Build Zeppelin $Z_VERSION" && \
 RUN echo "$LOG_TAG Cleanup" && \
 	apt-get autoclean && \
 	apt-get clean
+
+RUN pwd
+RUN ls /home/zeppelin
 
 EXPOSE 8080
 EXPOSE 8081
