@@ -92,13 +92,16 @@ RUN echo "$LOG_TAG Install requirements to build Zeppelin" && \
 	apt-get -y install nodejs yarn git libfontconfig r-base-dev r-cran-evaluate && \
 	wget http://www.eu.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz && \
 	tar -zxf apache-maven-3.3.9-bin.tar.gz -C /usr/local/ && \
-	ln -s /usr/local/apache-maven-3.3.9/bin/mvn /usr/local/bin/mvn
+	ln -s /usr/local/apache-maven-3.3.9/bin/mvn /usr/local/bin/mvn && \
+	npm config set strict-ssl false && \
+	npm install -g bower
+
 
 # confirm node, nom and maven installation
+RUN whoami
 RUN node -v
 RUN npm -v
 RUN mvn -v
-RUN rm -rf ~/.npm/
 RUN echo '{ "allow_root": true }' > /root/.bowerrc
 
 RUN export MAVEN_OPTS="-Xmx2g -XX:MaxPermSize=1024m"
