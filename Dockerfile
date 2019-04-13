@@ -98,8 +98,7 @@ RUN echo "$LOG_TAG Install requirements to build Zeppelin" && \
 
 
 # confirm node, nom and maven installation
-RUN groupadd -g 999 zeppelin && \
-    useradd -r -u 999 -g zeppelin zeppelin
+RUN useradd -ms /bin/bash zeppelin
 USER zeppelin
 WORKDIR /home/zeppelin
 RUN whoami
