@@ -115,11 +115,11 @@ RUN echo "$LOG_TAG Build Zeppelin $Z_VERSION" && \
 	git clone https://github.com/multivacplatform/zeppelin && \
 	cd zeppelin && \
 	git checkout branch-0.8 && \
-	./dev/change_scala_version.sh 2.11 && \
-	# rm -rf ~/.m2/repository && \
-	mvn -X clean package -DskipTests -Pbuild-distr -Dcheckstyle.skip=true -Pspark-2.4 -Pscala-2.11 &&\
-	mv zeppelin-distribution/target/zeppelin-${Z_VERSION}-SNAPSHOT/zeppelin-${Z_VERSION}-SNAPSHOT ${Z_HOME}
-
+	./dev/change_scala_version.sh 2.11 && \	
+	mvn -X clean package -DskipTests -Pbuild-distr -Dcheckstyle.skip=true -Pspark-2.4 -Pscala-2.11 && \
+	mv zeppelin-distribution/target/zeppelin-${Z_VERSION}-SNAPSHOT/zeppelin-${Z_VERSION}-SNAPSHOT ${Z_HOME} && \
+	rm -rf ${Z_HOME}/* && \
+	rm -rf ${Z_HOME}/.m2/ && \
 RUN pwd
 RUN ls /home/zeppelin
 

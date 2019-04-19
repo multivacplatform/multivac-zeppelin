@@ -23,7 +23,7 @@ docker pull maziyar/zeppelin:0.8.2
 docker run -it --rm -p 8080:8080 -p 8081:8081 maziyar/zeppelin
 ```
 
-Just head to your browser and you're good to go! 
+Just head to your browser and you're good to go!
 
 http://localhost:8080
 
