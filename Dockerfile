@@ -121,10 +121,11 @@ RUN echo "$LOG_TAG Build Zeppelin $Z_VERSION" && \
 
 RUN pwd
 RUN ls /home/zeppelin
+RUN rm -rf ${Z_HOME}/zeppelin
 
 EXPOSE 8080
 EXPOSE 8081
 
 ENTRYPOINT [ "/usr/bin/tini", "--" ]
-WORKDIR ${Z_HOME}
+WORKDIR ${Z_HOME}/zeppelin-${Z_VERSION}-SNAPSHOT
 CMD ["bin/zeppelin.sh"]
