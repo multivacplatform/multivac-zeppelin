@@ -19,12 +19,10 @@ ENV Z_VERSION="0.8.2"
 ENV LOG_TAG="[ZEPPELIN_${Z_VERSION}]:" Z_HOME="/home/zeppelin" LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
 RUN echo "$LOG_TAG update and install basic packages" && \
 	apt-get -y update && \
-	apt-get install -y locales && \
+	apt-get install -y locales software-properties-common build-essential && \
 	locale-gen $LANG && \
-	apt-get install -y software-properties-common && \
 	apt -y autoclean && \
-	apt -y dist-upgrade && \
-	apt-get install -y build-essential
+	apt -y dist-upgrade
 
 RUN echo "$LOG_TAG install tini related packages" && \
 	apt-get install -y wget curl grep sed dpkg && \
@@ -94,17 +92,14 @@ RUN echo "$LOG_TAG Install requirements to build Zeppelin" && \
 	tar -zxf apache-maven-3.3.9-bin.tar.gz -C /usr/local/ && \
 	ln -s /usr/local/apache-maven-3.3.9/bin/mvn /usr/local/bin/mvn && \
 	npm config set strict-ssl false && \
-	npm install -g bower
+	npm install -g bower &&\
+	apt -y autoclean
 
 # add zeppelin user and set home directory
 # confirm node, nom and maven installation
 RUN useradd -ms /bin/bash zeppelin
 USER zeppelin
 WORKDIR /home/zeppelin
-RUN whoami
-RUN node -v
-RUN npm -v
-RUN mvn -v
 RUN echo '{ "allow_root": true }' > ~/.bowerrc
 RUN cat ~/.bowerrc
 
@@ -122,6 +117,7 @@ RUN echo "$LOG_TAG Build Zeppelin $Z_VERSION" && \
 RUN pwd
 RUN ls /home/zeppelin
 RUN rm -rf ${Z_HOME}/zeppelin
+RUN rm -rf ~/.m2
 
 EXPOSE 8080
 EXPOSE 8081
