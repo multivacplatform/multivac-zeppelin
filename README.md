@@ -16,7 +16,7 @@ To know more about Zeppelin, visit our web site [https://zeppelin.apache.org](ht
 Docker image is built against Zeppelin 0.8.2 and it supports Apache Spark 2.4.
 
 ```bash
-docker pull maziyar/zeppelin:0.8.2
+docker pull multivacplatform/multivac-zeppelin
 ```
 
 ```bash
