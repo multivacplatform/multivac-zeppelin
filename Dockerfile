@@ -115,9 +115,13 @@ RUN echo "$LOG_TAG Build Zeppelin $Z_VERSION" && \
 	mv zeppelin-distribution/target/zeppelin-${Z_VERSION}-SNAPSHOT/zeppelin-${Z_VERSION}-SNAPSHOT ${Z_HOME}
 
 RUN pwd
-RUN ls /home/zeppelin
-RUN rm -rf ${Z_HOME}/zeppelin
-RUN rm -rf ~/.m2
+RUN rm -rf ${Z_HOME}/zeppelin \
+	&& rm -rf ~/.m2 \
+	&& rm -rf /var/lib/apt/lists/* \
+	&& rm -rf /root/.m2 \
+	&& rm -rf /root/.npm \
+	&& rm -rf /root/.cache/bower \
+	&& rm -rf /tmp/*
 
 EXPOSE 8080
 EXPOSE 8081
