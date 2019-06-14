@@ -98,6 +98,8 @@ RUN echo "$LOG_TAG Install requirements to build Zeppelin" && \
 # add zeppelin user and set home directory
 # confirm node, nom and maven installation
 RUN useradd -ms /bin/bash zeppelin
+RUN adduser zeppelin sudo
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 USER zeppelin
 WORKDIR /home/zeppelin
 RUN echo '{ "allow_root": true }' > ~/.bowerrc
@@ -113,9 +115,6 @@ RUN echo "$LOG_TAG Build Zeppelin $Z_VERSION" && \
 	./dev/change_scala_version.sh 2.11 && \	
 	mvn -X clean package -DskipTests -Pbuild-distr -Dcheckstyle.skip=true -Pspark-2.4 -Pscala-2.11 && \
 	mv zeppelin-distribution/target/zeppelin-${Z_VERSION}-SNAPSHOT/zeppelin-${Z_VERSION}-SNAPSHOT ${Z_HOME}
-
-RUN adduser zeppelin sudo
-RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 RUN pwd
 RUN rm -rf ${Z_HOME}/zeppelin \
