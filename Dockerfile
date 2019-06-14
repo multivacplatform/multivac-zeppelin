@@ -121,9 +121,8 @@ RUN rm -rf ${Z_HOME}/zeppelin \
 	&& rm -rf ~/.m2 \	
 	&& rm -rf /zeppelin/.m2 \
 	&& rm -rf /zeppelin/.npm \
-	&& rm -rf /zeppelin/.cache/bower \
-	&& rm -rf /tmp/*
-
+	&& rm -rf /zeppelin/.cache/bower
+	
 EXPOSE 8080
 EXPOSE 8081
 
