@@ -118,8 +118,7 @@ RUN echo "$LOG_TAG Build Zeppelin $Z_VERSION" && \
 
 RUN pwd
 RUN rm -rf ${Z_HOME}/zeppelin \
-	&& rm -rf ~/.m2 \
-	&& rm -rf /var/lib/apt/lists/* \
+	&& rm -rf ~/.m2 \	
 	&& rm -rf /root/.m2 \
 	&& rm -rf /root/.npm \
 	&& rm -rf /root/.cache/bower \
