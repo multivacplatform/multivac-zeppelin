@@ -119,9 +119,9 @@ RUN echo "$LOG_TAG Build Zeppelin $Z_VERSION" && \
 RUN pwd
 RUN rm -rf ${Z_HOME}/zeppelin \
 	&& rm -rf ~/.m2 \	
-	&& rm -rf /root/.m2 \
-	&& rm -rf /root/.npm \
-	&& rm -rf /root/.cache/bower \
+	&& rm -rf /zeppelin/.m2 \
+	&& rm -rf /zeppelin/.npm \
+	&& rm -rf /zeppelin/.cache/bower \
 	&& rm -rf /tmp/*
 
 EXPOSE 8080
